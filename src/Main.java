@@ -6,7 +6,15 @@
  */
 
 public class Main {
-    //prueba base for(i;i<10;i++){ }; 
+    //public static void main(){
+    //	for(i;i<10;i++){
+    //		print("hola");
+    //	}
+    //	if(i<i){
+    //		i=i+1;
+    //      i=3-4;
+    //	}
+    //}
     //se puede cambair el  "<" o la variable, solo esta i,e
 
     public static void main(String[] args) {

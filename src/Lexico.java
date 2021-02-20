@@ -67,6 +67,17 @@ public class Lexico {
                 }
             }
 
+            //encuentro de operadores de comparacion
+            if(control==0){
+                for(int i=0; i< tablaTok.opCom;i++){
+                    control=comCompleja(entrada, tablaTok.operadoresComparacion,i,modelo,control,a);
+                    if(control==1){
+                        a=a+tablaTok.operadoresComparacion[i][0].length();
+                        i=tablaTok.opCom;
+                    }
+                }
+            }
+
             
             //encuantro de operadores aritmeticos
             if(control==0){
@@ -80,16 +91,6 @@ public class Lexico {
                 }
             }
 
-            //encuentro de operadores de comparacion
-            if(control==0){
-                for(int i=0; i< tablaTok.opCom;i++){
-                    control=comCompleja(entrada, tablaTok.operadoresComparacion,i,modelo,control,a);
-                    if(control==1){
-                        a=a+tablaTok.operadoresComparacion[i][0].length();
-                        i=tablaTok.opCom;
-                    }
-                }
-            }
 
             //encuentro de operadores logicos
             if(control==0){
@@ -154,7 +155,7 @@ public class Lexico {
         } // fin del ciclo - fin separacion por caracteres
             
         modelo.addRow(new Object[]{"", ""});
-        
+
         if(errorLex==0){
             Sintactico sem= new Sintactico(etradaDiv);
             sem.analizar_revursivo(vista,0);
@@ -162,7 +163,6 @@ public class Lexico {
             
             modelo.addRow(new Object[]{"no se puede pasar al semantico", ""});
         }
-        
         etradaDiv.clear();
         
     }

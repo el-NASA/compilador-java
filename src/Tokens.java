@@ -5,11 +5,11 @@
 public class Tokens {
     
     String[][] palabrasRes;
-    int pR=4;
+    int pR=8;
     String[][] agrupacion;
     int ag=4;
     String [][] operadoresArit;
-    int opAr=4;
+    int opAr=5;
     String[][] operadoresComparacion;
     int opCom = 6;
     
@@ -45,6 +45,18 @@ public class Tokens {
 
         this.palabrasRes[3][0]="print";
         this.palabrasRes[3][1]="Palabra Reservada-impresion";
+
+        this.palabrasRes[4][0]="main";
+        this.palabrasRes[4][1]= "Palabra reservada-main";
+
+        this.palabrasRes[5][0]="public";
+        this.palabrasRes[5][1]= "Palabra reservada-public";
+
+        this.palabrasRes[6][0]="static";
+        this.palabrasRes[6][1]= "Palabra reservada-static";
+
+        this.palabrasRes[7][0]="void";
+        this.palabrasRes[7][1]= "Palabra reservada-void";
         
         this.agrupacion[0][0]="(";
         this.agrupacion[0][1]="Caracter Agrupacion- Apertura-1";
@@ -63,9 +75,11 @@ public class Tokens {
         this.operadoresArit[1][0] = "-";
         this.operadoresArit[1][1] = "Signo-Arit-menos";
         this.operadoresArit[2][0] = "*";
-        this.operadoresArit[2][1] = "Signo-Arit-multiplicación";
+        this.operadoresArit[2][1] = "Signo-Arit-multiplicacion";
         this.operadoresArit[3][0] = "/";
-        this.operadoresArit[3][1] = "Signo-Arit-divisón";
+        this.operadoresArit[3][1] = "Signo-Arit-divison";
+        this.operadoresArit[4][0] = "=";
+        this.operadoresArit[4][1] = "Signo-Arit-asignacion";
 
         
         
