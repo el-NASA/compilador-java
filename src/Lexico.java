@@ -28,6 +28,16 @@ public class Lexico {
             //para no verificar mas en la posicion cuando encuentre algo
             int control=0;
 
+            //encuentro de palabra res
+            if(control==0){
+                for(int i=0; i<tablaTok.pR;i++){
+                    control=comCompleja(entrada, tablaTok.palabrasRes,i,modelo,control,a);
+                    if(control==1){
+                        a=a+tablaTok.palabrasRes[i][0].length();
+                        i=tablaTok.pR;
+                    }
+                }
+            }
 
             //variables
             if(control==0){
@@ -42,16 +52,7 @@ public class Lexico {
                 }
             }
             
-            //encuentro de palabra res
-            if(control==0){
-                for(int i=0; i<tablaTok.pR;i++){
-                    control=comCompleja(entrada, tablaTok.palabrasRes,i,modelo,control,a);
-                    if(control==1){
-                        a=a+tablaTok.palabrasRes[i][0].length();
-                        i=tablaTok.pR;
-                    }
-                }
-            }
+
             
             
             //caracteres de agrupacion
@@ -155,8 +156,8 @@ public class Lexico {
         modelo.addRow(new Object[]{"", ""});
         
         if(errorLex==0){
-            Semantico sem= new Semantico(etradaDiv);
-            sem.analizar(vista);
+            Sintactico sem= new Sintactico(etradaDiv);
+            sem.analizar_revursivo(vista,0);
         }else{
             
             modelo.addRow(new Object[]{"no se puede pasar al semantico", ""});

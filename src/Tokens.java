@@ -5,7 +5,7 @@
 public class Tokens {
     
     String[][] palabrasRes;
-    int pR=3;
+    int pR=4;
     String[][] agrupacion;
     int ag=4;
     String [][] operadoresArit;
@@ -17,7 +17,7 @@ public class Tokens {
     int opLog = 2;
     
     String[][] var;
-    int va = 3;
+    int va = 2;
     
     String [] variables;
 
@@ -38,11 +38,13 @@ public class Tokens {
         this.palabrasRes[0][1]="Palabra Reservada-Condicional";
         
         this.palabrasRes[1][0]="for";
-        this.palabrasRes[1][1]="Palabra Reservada-siclo";
+        this.palabrasRes[1][1]="Palabra Reservada-ciclo";
         
         this.palabrasRes[2][0]=";";
         this.palabrasRes[2][1]="Palabra Reservada-separador";
-        
+
+        this.palabrasRes[3][0]="print";
+        this.palabrasRes[3][1]="Palabra Reservada-impresion";
         
         this.agrupacion[0][0]="(";
         this.agrupacion[0][1]="Caracter Agrupacion- Apertura-1";
@@ -99,10 +101,7 @@ public class Tokens {
         this.var[1][0] = "e";
         this.var[1][1] = "variable-entero";
         this.var[1][2] = "20";
-        
-        this.var[2][0] = "a";
-        this.var[2][1] = "var-string";
-        this.var[2][2] = "hola";
+
        
         
     }
