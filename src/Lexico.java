@@ -12,7 +12,7 @@ public class Lexico {
     ArrayList<Nodo> etradaDiv = new ArrayList<Nodo>();
 
     
-    public void analizar (String entrada, JTable vista){
+    public void analizar (String entrada, JTable vista, Vista vista2){
         
         int errorLex=0; // Cuenta los errores léxicos presentes, ej: caracter sin sentido
         DefaultTableModel modelo;
@@ -149,7 +149,11 @@ public class Lexico {
             if(control==0){
                 modelo.addRow(new Object[]{entrada.charAt(a), "Caracter sin sentido- Error"});
                 errorLex++;
+                vista2.getJTextPane().setText(vista2.getJTextPane().getText()+"!!! "+ entrada.charAt(a)+" !!!");
                 a++;
+            }
+            else{
+                vista2.getJTextPane().setText(vista2.getJTextPane().getText()+" "+ this.etradaDiv.get(this.etradaDiv.size()-1).token+" ");
             }
                 
         } // fin del ciclo - fin separacion por caracteres
@@ -158,7 +162,7 @@ public class Lexico {
 
         if(errorLex==0){
             Sintactico sem= new Sintactico(etradaDiv);
-            sem.analizar_revursivo(vista,0);
+            sem.analizar_revursivo(vista,0, vista2);
         }else{
             
             modelo.addRow(new Object[]{"no se puede pasar al semantico", ""});

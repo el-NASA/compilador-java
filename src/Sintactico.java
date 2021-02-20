@@ -12,7 +12,7 @@ public class Sintactico {
     }
 
 
-    public int analizar_revursivo(JTable vista, int entero1){
+    public int analizar_revursivo(JTable vista, int entero1, Vista vista2){
         DefaultTableModel modelo;
         modelo = (DefaultTableModel) vista.getModel();
         modelo.addRow(new Object[]{"", ""});
@@ -61,11 +61,13 @@ public class Sintactico {
                     }else{
                         error=0;
                         i=b+x+1;
+                        vista2.getJTextPane().setText(vista2.getJTextPane().getText()+" "+ entrada.get(a).token);
                     }
 
                 }
                 if(error>0){
                     modelo.addRow(new Object[]{"error en: "+entrada.get(a).descripcion, ""});
+                    vista2.getJTextPane().setText(vista2.getJTextPane().getText()+"!!! "+ entrada.get(a).token+" !!!");
                 }
 
                 b=b+x;
@@ -74,12 +76,22 @@ public class Sintactico {
                 if( entrada.get(a).descripcion.equals(expReg[b]) == false){ //verificacion de solo un caso
                     error++;
                     modelo.addRow(new Object[]{"error en: "+entrada.get(a).token, "correccion: "+expReg[b] + "Token #: "+ a});
+                    if(entrada.get(a).token.equals("{"))
+                        vista2.getJTextPane().setText(vista2.getJTextPane().getText()+"!!!"+ entrada.get(a).token+" !!!\n");
+                    else
+                        vista2.getJTextPane().setText(vista2.getJTextPane().getText()+"!!! "+ entrada.get(a).token+" !!!");
+                }
+                else{
+                    if(entrada.get(a).token.equals("{"))
+                        vista2.getJTextPane().setText(vista2.getJTextPane().getText()+ entrada.get(a).token+"\n");
+                    else
+                    vista2.getJTextPane().setText(vista2.getJTextPane().getText()+" "+ entrada.get(a).token);
                 }
                 if(entrada.get(a).token.equals("{") || entrada.get(a).token.equals("}") || entrada.get(a).token.equals(";") ){
                     if(a+1<entrada.size()){
                         if(comparacion(entrada, a+1)){
                             //funcion para determinar operaciones anidadas
-                            a=analizar_revursivo(vista, a+1);
+                            a=analizar_revursivo(vista, a+1, vista2);
                             a--;
                         }
                     }
@@ -185,31 +197,31 @@ public class Sintactico {
     }
 
     public String[] baseIf(){
-        String[] expReg = new String[14];
+        String[] expReg = new String[20];
 
         expReg[0]="Palabra Reservada-Condicional";
         expReg[1]="Caracter Agrupacion- Apertura-1";
         expReg[2]="3";
-        expReg[2]="variable-entero";
+        expReg[3]="variable-entero";
         expReg[4]="Constante-Numerica-Entera";
-        expReg[4]="Constante-Numerica-Decimal";
+        expReg[5]="Constante-Numerica-Decimal";
 
-        expReg[3]="6"; //si hay un numero significa que son posibles entradas en esa posicion
-        expReg[4]="Simbolo-Comp-menor o igual";
-        expReg[5]="Simbolo-Comp-igual que";
-        expReg[6]="Simbolo-Comp-diferete que";
-        expReg[7]="Simbolo-Comp-mayor 0 igual";
-        expReg[8]="Simbolo-Comp-mayor";
-        expReg[9]="Simbolo-Comp-menor";
+        expReg[6]="6"; //si hay un numero significa que son posibles entradas en esa posicion
+        expReg[7]="Simbolo-Comp-menor o igual";
+        expReg[8]="Simbolo-Comp-igual que";
+        expReg[9]="Simbolo-Comp-diferete que";
+        expReg[10]="Simbolo-Comp-mayor 0 igual";
+        expReg[11]="Simbolo-Comp-mayor";
+        expReg[12]="Simbolo-Comp-menor";
 
-        expReg[2]="3";
-        expReg[2]="variable-entero";
-        expReg[4]="Constante-Numerica-Entera";
-        expReg[4]="Constante-Numerica-Decimal";
+        expReg[13]="3";
+        expReg[14]="variable-entero";
+        expReg[15]="Constante-Numerica-Entera";
+        expReg[16]="Constante-Numerica-Decimal";
 
-        expReg[11]="Caracter Agrupacion- Cierre-1";
-        expReg[12]="Caracter Agrupacion- Apertura-2";
-        expReg[13]="Caracter Agrupacion- Cierre-2";
+        expReg[17]="Caracter Agrupacion- Cierre-1";
+        expReg[18]="Caracter Agrupacion- Apertura-2";
+        expReg[19]="Caracter Agrupacion- Cierre-2";
 
         return expReg;
     }
