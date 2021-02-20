@@ -4,7 +4,6 @@
  * https://youtu.be/4m7ubrdbWQU
  * https://youtu.be/bxpc9Pp5pZM
  */
-package calculadoralogica;
 
 import java.util.ArrayList;
 import java.util.Vector;

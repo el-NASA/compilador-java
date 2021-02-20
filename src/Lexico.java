@@ -1,37 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package calculadoralogica;
-
-import static calculadoralogica.Main.operaciones;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 /**
  *
  * @author Alba
  */
 public class Lexico {
-    
-    char entrada[];
-    ArrayList<Nodo> etradaDiv = new ArrayList<Nodo>();
-  
 
-    public Lexico() {
-        
-    }
+    ArrayList<Nodo> etradaDiv = new ArrayList<Nodo>();
 
     
     public void analizar (String entrada, JTable vista){
         
-        int errorLex=0;
+        int errorLex=0; // Cuenta los errores léxicos presentes, ej: caracter sin sentido
         DefaultTableModel modelo;
         modelo = (DefaultTableModel) vista.getModel();   
         modelo.addRow(new Object[]{"", ""});     
