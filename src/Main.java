@@ -1,42 +1,28 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Compilador lenguaje Java
+ * Hecho por: Jordy Pineda - 20172020119
+ * Daniel Rodriguez - 20172020009
+ * Universidad Distrital Francisco José de Caldas
  */
-package calculadoralogica;
 
-/**
- *
- * @author Alba
- */
 public class Main {
-    
-
-    
-    //prueba base for(i;i<10;i++){ }; 
+    //public static void main(){
+    //	for(i;i<10;i++){
+    //		print("hola");
+    //	}
+    //	if(i<i){
+    //		i=i+1;
+    //      i=3-4;
+    //	}
+    //}
     //se puede cambair el  "<" o la variable, solo esta i,e
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-       for(int i=0; i<=10;i=i+3){
 
-       }
+    public static void main(String[] args) {
         Lexico c= new Lexico();
         Vista ventana= new Vista(c);
         ventana.setVisible(true);
        
         
     }
-    
-     
-    static public void operaciones(String []op, int a){
-        
-        
-        
-        
-    } 
-    
-    
+
 }

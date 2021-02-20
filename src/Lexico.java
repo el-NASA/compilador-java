@@ -1,37 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package calculadoralogica;
-
-import static calculadoralogica.Main.operaciones;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 /**
  *
  * @author Alba
  */
 public class Lexico {
-    
-    char entrada[];
+
     ArrayList<Nodo> etradaDiv = new ArrayList<Nodo>();
-  
-
-    public Lexico() {
-        
-    }
 
     
-    public void analizar (String entrada, JTable vista){
+    public void analizar (String entrada, JTable vista, Vista vista2){
         
-        int errorLex=0;
+        int errorLex=0; // Cuenta los errores léxicos presentes, ej: caracter sin sentido
         DefaultTableModel modelo;
         modelo = (DefaultTableModel) vista.getModel();   
         modelo.addRow(new Object[]{"", ""});     
@@ -45,6 +28,16 @@ public class Lexico {
             //para no verificar mas en la posicion cuando encuentre algo
             int control=0;
 
+            //encuentro de palabra res
+            if(control==0){
+                for(int i=0; i<tablaTok.pR;i++){
+                    control=comCompleja(entrada, tablaTok.palabrasRes,i,modelo,control,a);
+                    if(control==1){
+                        a=a+tablaTok.palabrasRes[i][0].length();
+                        i=tablaTok.pR;
+                    }
+                }
+            }
 
             //variables
             if(control==0){
@@ -59,16 +52,7 @@ public class Lexico {
                 }
             }
             
-            //encuentro de palabra res
-            if(control==0){
-                for(int i=0; i<tablaTok.pR;i++){
-                    control=comCompleja(entrada, tablaTok.palabrasRes,i,modelo,control,a);
-                    if(control==1){
-                        a=a+tablaTok.palabrasRes[i][0].length();
-                        i=tablaTok.pR;
-                    }
-                }
-            }
+
             
             
             //caracteres de agrupacion
@@ -80,6 +64,17 @@ public class Lexico {
                        a++;
                        i=tablaTok.ag;
                    }
+                }
+            }
+
+            //encuentro de operadores de comparacion
+            if(control==0){
+                for(int i=0; i< tablaTok.opCom;i++){
+                    control=comCompleja(entrada, tablaTok.operadoresComparacion,i,modelo,control,a);
+                    if(control==1){
+                        a=a+tablaTok.operadoresComparacion[i][0].length();
+                        i=tablaTok.opCom;
+                    }
                 }
             }
 
@@ -96,16 +91,6 @@ public class Lexico {
                 }
             }
 
-            //encuentro de operadores de comparacion
-            if(control==0){
-                for(int i=0; i< tablaTok.opCom;i++){
-                    control=comCompleja(entrada, tablaTok.operadoresComparacion,i,modelo,control,a);
-                    if(control==1){
-                        a=a+tablaTok.operadoresComparacion[i][0].length();
-                        i=tablaTok.opCom;
-                    }
-                }
-            }
 
             //encuentro de operadores logicos
             if(control==0){
@@ -164,21 +149,24 @@ public class Lexico {
             if(control==0){
                 modelo.addRow(new Object[]{entrada.charAt(a), "Caracter sin sentido- Error"});
                 errorLex++;
+                vista2.getJTextPane().setText(vista2.getJTextPane().getText()+"!!! "+ entrada.charAt(a)+" !!!");
                 a++;
+            }
+            else{
+                vista2.getJTextPane().setText(vista2.getJTextPane().getText()+" "+ this.etradaDiv.get(this.etradaDiv.size()-1).token+" ");
             }
                 
         } // fin del ciclo - fin separacion por caracteres
             
         modelo.addRow(new Object[]{"", ""});
-        
+
         if(errorLex==0){
-            Semantico sem= new Semantico(etradaDiv);
-            sem.analizar(vista);
+            Sintactico sem= new Sintactico(etradaDiv);
+            sem.analizar_revursivo(vista,0, vista2);
         }else{
             
             modelo.addRow(new Object[]{"no se puede pasar al semantico", ""});
         }
-        
         etradaDiv.clear();
         
     }

@@ -1,10 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package calculadoralogica;
-
 /**
  *
  * @author Alba
@@ -12,11 +5,11 @@ package calculadoralogica;
 public class Tokens {
     
     String[][] palabrasRes;
-    int pR=3;
+    int pR=8;
     String[][] agrupacion;
     int ag=4;
     String [][] operadoresArit;
-    int opAr=4;
+    int opAr=5;
     String[][] operadoresComparacion;
     int opCom = 6;
     
@@ -24,7 +17,7 @@ public class Tokens {
     int opLog = 2;
     
     String[][] var;
-    int va = 3;
+    int va = 2;
     
     String [] variables;
 
@@ -45,11 +38,25 @@ public class Tokens {
         this.palabrasRes[0][1]="Palabra Reservada-Condicional";
         
         this.palabrasRes[1][0]="for";
-        this.palabrasRes[1][1]="Palabra Reservada-siclo";
+        this.palabrasRes[1][1]="Palabra Reservada-ciclo";
         
         this.palabrasRes[2][0]=";";
         this.palabrasRes[2][1]="Palabra Reservada-separador";
-        
+
+        this.palabrasRes[3][0]="print";
+        this.palabrasRes[3][1]="Palabra Reservada-impresion";
+
+        this.palabrasRes[4][0]="main";
+        this.palabrasRes[4][1]= "Palabra reservada-main";
+
+        this.palabrasRes[5][0]="public";
+        this.palabrasRes[5][1]= "Palabra reservada-public";
+
+        this.palabrasRes[6][0]="static";
+        this.palabrasRes[6][1]= "Palabra reservada-static";
+
+        this.palabrasRes[7][0]="void";
+        this.palabrasRes[7][1]= "Palabra reservada-void";
         
         this.agrupacion[0][0]="(";
         this.agrupacion[0][1]="Caracter Agrupacion- Apertura-1";
@@ -68,9 +75,11 @@ public class Tokens {
         this.operadoresArit[1][0] = "-";
         this.operadoresArit[1][1] = "Signo-Arit-menos";
         this.operadoresArit[2][0] = "*";
-        this.operadoresArit[2][1] = "Signo-Arit-multiplicación";
+        this.operadoresArit[2][1] = "Signo-Arit-multiplicacion";
         this.operadoresArit[3][0] = "/";
-        this.operadoresArit[3][1] = "Signo-Arit-divisón";
+        this.operadoresArit[3][1] = "Signo-Arit-divison";
+        this.operadoresArit[4][0] = "=";
+        this.operadoresArit[4][1] = "Signo-Arit-asignacion";
 
         
         
@@ -106,10 +115,7 @@ public class Tokens {
         this.var[1][0] = "e";
         this.var[1][1] = "variable-entero";
         this.var[1][2] = "20";
-        
-        this.var[2][0] = "a";
-        this.var[2][1] = "var-string";
-        this.var[2][2] = "hola";
+
        
         
     }
