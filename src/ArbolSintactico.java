@@ -17,6 +17,8 @@ public class ArbolSintactico {
     }
     //<for loop> ::= for ( <expression> ; <expression>; <expression> ) <statement>
     public void constuir_arbol(){
+        for (int i=0;i<entrada.size();i++)
+            System.out.println("entrada: "+entrada.get(i).token);
         verificar_for(); // Construye rama izquierda del arbol
         verificar_declaracion(); // Construye rama derecha del arbol
         imprimir_arbol();

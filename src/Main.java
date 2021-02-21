@@ -6,15 +6,18 @@
  */
 
 public class Main {
-    //public static void main(){
-    //	for(i;i<10;i++){
-    //		print("hola");
-    //	}
-    //	if(i<i){
-    //		i=i+1;
-    //      i=3-4;
-    //	}
-    //}
+    /*
+    public static void main(){
+        for(i;i<10;i++){
+            print("hola");
+        }
+        if(i<i){
+            i=i+1;
+            int y = 3;
+            int c = 4;
+            i=3-4;
+        }
+    }*/
     //se puede cambair el  "<" o la variable, solo esta i,e
 
     public static void main(String[] args) {

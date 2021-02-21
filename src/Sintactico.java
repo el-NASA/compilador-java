@@ -3,12 +3,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class Sintactico {
-    
+
     ArrayList<Nodo> entrada = new ArrayList<Nodo>();
 
     public Sintactico(ArrayList<Nodo> e) {
         this.entrada=e;
-        
+
     }
 
 
@@ -23,7 +23,6 @@ public class Sintactico {
         int b=0;//aumento en la exprecionReg
         int error =0;
 
-        System.out.println(entrada.get(a).token);
 
         switch(entrada.get(a).descripcion){
             case "Palabra Reservada-ciclo":
@@ -36,6 +35,22 @@ public class Sintactico {
 
             case "Palabra Reservada-impresion":
                 expReg=basePrint();
+                break;
+
+                case "Palabra Reservada-int":
+                    expReg=baseDefinicion();
+                    break;
+
+            case "Palabra Reservada-String":
+                expReg=baseDefinicion();
+                break;
+
+            case "Palabra Reservada-char":
+                expReg=baseDefinicion();
+                break;
+
+            case "Palabra Reservada-double":
+                expReg=baseDefinicion();
                 break;
 
             case "variable-entero":
@@ -99,8 +114,6 @@ public class Sintactico {
 
                 }
             }
-
-
             a++;
             b++;
             error=0;
@@ -108,23 +121,34 @@ public class Sintactico {
         if(b<expReg.length){
             modelo.addRow(new Object[]{"Falta completar", expReg[b]});
         }
-
+        //ArbolSintactico arbol = new ArbolSintactico(entrada);
+        //arbol.constuir_arbol();
         return a;
-
-
     }
 
+    //Función que determina que expresión regular usar a continuación
     public boolean comparacion(ArrayList<Nodo> lista, int entero1){
         switch (lista.get(entero1).descripcion){
             case "Palabra Reservada-ciclo":
                 return true;
 
-
             case "Palabra Reservada-Condicional":
                 return true;
 
-
             case "Palabra Reservada-impresion":
+                return true;
+
+            case "Palabra Reservada-int":
+                System.out.println("bandera int");
+                return true;
+
+            case "Palabra Reservada-String":
+                return true;
+
+            case "Palabra Reservada-char":
+                return true;
+
+            case "Palabra Reservada-double":
                 return true;
 
             case "variable-entero":
@@ -134,14 +158,27 @@ public class Sintactico {
                 return false;
 
 
-
             default:
                 return false;
 
         }
     }
 
-    //definicion de la "expresion regular"
+    //comprobacion a paso de entero
+    public boolean coNum (String a){
+        boolean result= true;
+
+        try
+        {
+            int x= Integer.parseInt(a);
+        }catch (NumberFormatException nfe){
+            result= false;
+        }
+
+        return result;
+    }
+
+    //Definición expresión regular para ciclo for
     public String[] baseFor(){
         String[] expReg = new String[24];
 
@@ -182,20 +219,7 @@ public class Sintactico {
         return expReg;
     }
 
-    //comprobacion a paso de entero
-    public boolean coNum (String a){
-        boolean result= true;
-
-        try
-        {
-            int x= Integer.parseInt(a);
-        }catch (NumberFormatException nfe){
-            result= false;
-        }
-
-        return result;
-    }
-
+    //Definición expresión regular para if
     public String[] baseIf(){
         String[] expReg = new String[20];
 
@@ -225,6 +249,8 @@ public class Sintactico {
 
         return expReg;
     }
+
+    //Definición expresión regular para print
     public String[] basePrint(){
         String[] expReg = new String[5];
 
@@ -238,13 +264,14 @@ public class Sintactico {
         return expReg;
     }
 
+    //Definición expresión regular para main
     public String[] baseMain(){
         String[] expReg = new String[8];
 
-        expReg[0]="Palabra reservada-public";
-        expReg[1]="Palabra reservada-static";
-        expReg[2]="Palabra reservada-void";
-        expReg[3]="Palabra reservada-main";
+        expReg[0]="Palabra Reservada-public";
+        expReg[1]="Palabra Reservada-static";
+        expReg[2]="Palabra Reservada-void";
+        expReg[3]="Palabra Reservada-main";
         expReg[4]="Caracter Agrupacion- Apertura-1";
         expReg[5]="Caracter Agrupacion- Cierre-1";
         expReg[6]="Caracter Agrupacion- Apertura-2";
@@ -253,6 +280,7 @@ public class Sintactico {
         return expReg;
     }
 
+    //Definición expresión regular para operaciones aritmeticas
     public String[] baseAritmetica(){
         String[] expReg = new String[14];
 
@@ -273,5 +301,25 @@ public class Sintactico {
 
         return expReg;
     }
+
+    public String[] baseDefinicion(){
+        String[] expReg = new String[12];
+
+        expReg[0]="4";
+        expReg[1]="Palabra Reservada-int";
+        expReg[2]="Palabra Reservada-String";
+        expReg[3]="Palabra Reservada-char";
+        expReg[4]="Palabra Reservada-double";
+        expReg[5]="variable";
+        expReg[6]="Signo-Arit-asignacion";
+        expReg[7]="3";
+        expReg[8]="Constante-Numerica-Entera";
+        expReg[9]="Constante-Numerica-Decimal";
+        expReg[10]="Cadena de texto";
+        expReg[11]="Palabra Reservada-separador";
+
+        return expReg;
+    }
+
 
 }

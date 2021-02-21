@@ -28,12 +28,35 @@ public class Lexico {
             //para no verificar mas en la posicion cuando encuentre algo
             int control=0;
 
+            /*if(entrada.charAt(a)==' '){
+                a++;
+            }*/
+
             //encuentro de palabra res
             if(control==0){
                 for(int i=0; i<tablaTok.pR;i++){
                     control=comCompleja(entrada, tablaTok.palabrasRes,i,modelo,control,a);
                     if(control==1){
                         a=a+tablaTok.palabrasRes[i][0].length();
+
+
+                        if(tablaTok.palabrasRes[i][0].equals("int") || tablaTok.palabrasRes[i][0].equals("String") ||
+                                tablaTok.palabrasRes[i][0].equals("char") || tablaTok.palabrasRes[i][0].equals("double")){
+                            vista2.getJTextPane().setText(vista2.getJTextPane().getText()+" "+ this.etradaDiv.get(this.etradaDiv.size()-1).token+" ");
+                            String nombre_aux = "";
+
+                            System.out.println(entrada.charAt(a));
+                            while (entrada.charAt(a)!='='){
+                                nombre_aux = nombre_aux+entrada.charAt(a);
+                                a++;
+                            }
+                            Nodo nodo_aux = new Nodo();
+                            nodo_aux.setToken(nombre_aux);
+                            nodo_aux.setDescripcion("variable");
+                            this.etradaDiv.add(nodo_aux);
+                            modelo.addRow(new Object[]{nodo_aux.token, nodo_aux.descripcion});
+
+                        }
                         i=tablaTok.pR;
                     }
                 }
@@ -161,6 +184,7 @@ public class Lexico {
         modelo.addRow(new Object[]{"", ""});
 
         if(errorLex==0){
+            vista2.getJTextPane().setText(vista2.getJTextPane().getText()+"\niniciando sintactico\n");
             Sintactico sem= new Sintactico(etradaDiv);
             sem.analizar_revursivo(vista,0, vista2);
         }else{

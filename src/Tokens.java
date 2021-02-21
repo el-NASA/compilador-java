@@ -5,7 +5,7 @@
 public class Tokens {
     
     String[][] palabrasRes;
-    int pR=8;
+    int pR=12;
     String[][] agrupacion;
     int ag=4;
     String [][] operadoresArit;
@@ -27,7 +27,7 @@ public class Tokens {
         this.operadoresArit = new String[opAr][2];
         this.operadoresComparacion = new String[opCom][2];
         this.operadoresLogicos = new String[opLog][2];
-        this.var = new String[va][3];
+        this.var = new String[10][3];
         Iniciar();
         
     }
@@ -47,16 +47,29 @@ public class Tokens {
         this.palabrasRes[3][1]="Palabra Reservada-impresion";
 
         this.palabrasRes[4][0]="main";
-        this.palabrasRes[4][1]= "Palabra reservada-main";
+        this.palabrasRes[4][1]= "Palabra Reservada-main";
 
         this.palabrasRes[5][0]="public";
-        this.palabrasRes[5][1]= "Palabra reservada-public";
+        this.palabrasRes[5][1]= "Palabra Reservada-public";
 
         this.palabrasRes[6][0]="static";
-        this.palabrasRes[6][1]= "Palabra reservada-static";
+        this.palabrasRes[6][1]= "Palabra Reservada-static";
 
         this.palabrasRes[7][0]="void";
-        this.palabrasRes[7][1]= "Palabra reservada-void";
+        this.palabrasRes[7][1]= "Palabra Reservada-void";
+
+        this.palabrasRes[8][0]="int";
+        this.palabrasRes[8][1]= "Palabra Reservada-int";
+
+        this.palabrasRes[9][0]="String";
+        this.palabrasRes[9][1]= "Palabra Reservada-String";
+
+        this.palabrasRes[10][0]="char";
+        this.palabrasRes[10][1]= "Palabra Reservada-char";
+
+        this.palabrasRes[11][0]="double";
+        this.palabrasRes[11][1]= "Palabra Reservada-double";
+
         
         this.agrupacion[0][0]="(";
         this.agrupacion[0][1]="Caracter Agrupacion- Apertura-1";
@@ -119,7 +132,13 @@ public class Tokens {
        
         
     }
-    
+
+    public void set_va(int a){
+        this.va = a;
+    }
+    public  int get_va(){
+        return this.va;
+    }
     
     
 }
