@@ -3,13 +3,20 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class Sintactico {
-    
-    ArrayList<Nodo> entrada = new ArrayList<Nodo>();
 
+    ArrayList<Nodo> entrada = new ArrayList<Nodo>();
+    ArrayList<Integer> rangos = new ArrayList<Integer>();
     public Sintactico(ArrayList<Nodo> e) {
         this.entrada=e;
-        
+        rangos.add(1);
     }
+
+    ArbolBinario arbol = new ArbolBinario();
+    int nivel = 0;
+    int nivelMax = 0;
+    int nivelMin = 1;
+    int salto = 1;
+
 
 
     public int analizar_revursivo(JTable vista, int entero1, Vista vista2){
@@ -23,7 +30,6 @@ public class Sintactico {
         int b=0;//aumento en la exprecionReg
         int error =0;
 
-        System.out.println(entrada.get(a).token);
 
         switch(entrada.get(a).descripcion){
             case "Palabra Reservada-ciclo":
@@ -36,6 +42,22 @@ public class Sintactico {
 
             case "Palabra Reservada-impresion":
                 expReg=basePrint();
+                break;
+
+                case "Palabra Reservada-int":
+                    expReg=baseInt();
+                    break;
+
+            case "Palabra Reservada-String":
+                expReg=baseString();
+                break;
+
+            case "Palabra Reservada-char":
+                expReg=baseChar();
+                break;
+
+            case "Palabra Reservada-double":
+                expReg=baseDouble();
                 break;
 
             case "variable-entero":
@@ -62,6 +84,7 @@ public class Sintactico {
                         error=0;
                         i=b+x+1;
                         vista2.getJTextPane().setText(vista2.getJTextPane().getText()+" "+ entrada.get(a).token);
+                        arbol.addNode(nivel,entrada.get(a), a);
                     }
 
                 }
@@ -73,6 +96,7 @@ public class Sintactico {
                 b=b+x;
             }else{
 
+
                 if( entrada.get(a).descripcion.equals(expReg[b]) == false){ //verificacion de solo un caso
                     error++;
                     modelo.addRow(new Object[]{"error en: "+entrada.get(a).token, "correccion: "+expReg[b] + "Token #: "+ a});
@@ -82,10 +106,44 @@ public class Sintactico {
                         vista2.getJTextPane().setText(vista2.getJTextPane().getText()+"!!! "+ entrada.get(a).token+" !!!");
                 }
                 else{
-                    if(entrada.get(a).token.equals("{"))
-                        vista2.getJTextPane().setText(vista2.getJTextPane().getText()+ entrada.get(a).token+"\n");
-                    else
-                    vista2.getJTextPane().setText(vista2.getJTextPane().getText()+" "+ entrada.get(a).token);
+
+                    if(entrada.get(a).token.equals("{")){
+                        vista2.getJTextPane().setText(vista2.getJTextPane().getText()+ entrada.get(a).token+"\n->");
+                        //nivel2.add(entrada.get(a).token);
+                        //arbol.addNode(nivel,entrada.get(a));
+
+                        if(nivel==1) {
+                            nivel+=salto;
+                        }else {
+                            nivel++;
+                        }
+                        if(nivelMax<=nivel){
+                            nivelMax = nivel;
+                        }
+
+
+
+                    }
+                    else if( entrada.get(a).token.equals("}")){
+                        //nivel=nivelAux;
+                        if((nivel-1)==nivelMin){
+                            salto = nivelMax+3;
+                            nivelMin = nivelMax+2;
+                            nivel=2;
+                            rangos.add(salto+1);
+                        }
+                        nivel--;
+                        //arbol.addNode(nivel,entrada.get(a));
+
+                    }
+
+                    else{
+                        vista2.getJTextPane().setText(vista2.getJTextPane().getText()+" "+ entrada.get(a).token);
+                        //nivel2.add(entrada.get(a).token);
+                        arbol.addNode(nivel,entrada.get(a), a);
+
+                    }
+
                 }
                 if(entrada.get(a).token.equals("{") || entrada.get(a).token.equals("}") || entrada.get(a).token.equals(";") ){
                     if(a+1<entrada.size()){
@@ -99,32 +157,44 @@ public class Sintactico {
 
                 }
             }
-
-
             a++;
             b++;
             error=0;
         }
+
         if(b<expReg.length){
             modelo.addRow(new Object[]{"Falta completar", expReg[b]});
         }
-
+        if(a==entrada.size()){
+            Semantico anSemantico = new Semantico(arbol, entrada.size(), rangos, vista2);
+            anSemantico.verificacionVariables();
+            anSemantico.verificacionUsoVariables();
+        }
         return a;
-
-
     }
 
+    //Función que determina que expresión regular usar a continuación
     public boolean comparacion(ArrayList<Nodo> lista, int entero1){
         switch (lista.get(entero1).descripcion){
             case "Palabra Reservada-ciclo":
                 return true;
 
-
             case "Palabra Reservada-Condicional":
                 return true;
 
-
             case "Palabra Reservada-impresion":
+                return true;
+
+            case "Palabra Reservada-int":
+                return true;
+
+            case "Palabra Reservada-String":
+                return true;
+
+            case "Palabra Reservada-char":
+                return true;
+
+            case "Palabra Reservada-double":
                 return true;
 
             case "variable-entero":
@@ -134,14 +204,27 @@ public class Sintactico {
                 return false;
 
 
-
             default:
                 return false;
 
         }
     }
 
-    //definicion de la "expresion regular"
+    //comprobacion a paso de entero
+    public boolean coNum (String a){
+        boolean result= true;
+
+        try
+        {
+            int x= Integer.parseInt(a);
+        }catch (NumberFormatException nfe){
+            result= false;
+        }
+
+        return result;
+    }
+
+    //Definición expresión regular para ciclo for
     public String[] baseFor(){
         String[] expReg = new String[24];
 
@@ -182,20 +265,7 @@ public class Sintactico {
         return expReg;
     }
 
-    //comprobacion a paso de entero
-    public boolean coNum (String a){
-        boolean result= true;
-
-        try
-        {
-            int x= Integer.parseInt(a);
-        }catch (NumberFormatException nfe){
-            result= false;
-        }
-
-        return result;
-    }
-
+    //Definición expresión regular para if
     public String[] baseIf(){
         String[] expReg = new String[20];
 
@@ -225,6 +295,8 @@ public class Sintactico {
 
         return expReg;
     }
+
+    //Definición expresión regular para print
     public String[] basePrint(){
         String[] expReg = new String[5];
 
@@ -238,13 +310,14 @@ public class Sintactico {
         return expReg;
     }
 
+    //Definición expresión regular para main
     public String[] baseMain(){
         String[] expReg = new String[8];
 
-        expReg[0]="Palabra reservada-public";
-        expReg[1]="Palabra reservada-static";
-        expReg[2]="Palabra reservada-void";
-        expReg[3]="Palabra reservada-main";
+        expReg[0]="Palabra Reservada-public";
+        expReg[1]="Palabra Reservada-static";
+        expReg[2]="Palabra Reservada-void";
+        expReg[3]="Palabra Reservada-main";
         expReg[4]="Caracter Agrupacion- Apertura-1";
         expReg[5]="Caracter Agrupacion- Cierre-1";
         expReg[6]="Caracter Agrupacion- Apertura-2";
@@ -253,6 +326,7 @@ public class Sintactico {
         return expReg;
     }
 
+    //Definición expresión regular para operaciones aritmeticas
     public String[] baseAritmetica(){
         String[] expReg = new String[14];
 
@@ -273,5 +347,53 @@ public class Sintactico {
 
         return expReg;
     }
+
+    public String[] baseInt(){
+        String[] expReg = new String[5];
+
+        expReg[0]="Palabra Reservada-int";
+        expReg[1]="variable";
+        expReg[2]="Signo-Arit-asignacion";
+        expReg[3]="Constante-Numerica-Entera";
+        expReg[4]="Palabra Reservada-separador";
+
+        return expReg;
+    }
+    public String[] baseString(){
+        String[] expReg = new String[5];
+
+        expReg[0]="Palabra Reservada-String";
+        expReg[1]="variable";
+        expReg[2]="Signo-Arit-asignacion";
+        expReg[3]="Cadena de texto";
+        expReg[4]="Palabra Reservada-separador";
+
+        return expReg;
+    }
+    public String[] baseChar(){
+        String[] expReg = new String[5];
+
+        expReg[0]="Palabra Reservada-char";
+        expReg[1]="variable";
+        expReg[2]="Signo-Arit-asignacion";
+        expReg[3]="Cadena de texto";
+        expReg[4]="Palabra Reservada-separador";
+
+        return expReg;
+    }
+    public String[] baseDouble(){
+        String[] expReg = new String[7];
+
+        expReg[0]="Palabra Reservada-double";
+        expReg[1]="variable";
+        expReg[2]="Signo-Arit-asignacion";
+        expReg[3]="2";
+        expReg[4]="Constante-Numerica-Entera";
+        expReg[5]="Constante-Numerica-Decimal";
+        expReg[6]="Palabra Reservada-separador";
+
+        return expReg;
+    }
+
 
 }

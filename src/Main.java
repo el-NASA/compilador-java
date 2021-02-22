@@ -6,16 +6,41 @@
  */
 
 public class Main {
-    //public static void main(){
-    //	for(i;i<10;i++){
-    //		print("hola");
-    //	}
-    //	if(i<i){
-    //		i=i+1;
-    //      i=3-4;
-    //	}
-    //}
-    //se puede cambair el  "<" o la variable, solo esta i,e
+    /*
+    public static void main(){
+
+	int i=1;
+	for(i;i<10;i++){
+		int a =3;
+            		System.out.println("hola");
+		if(i<4){
+			double w =6.9;
+			char j="j";
+		}
+
+        	}
+
+	int w = 3;
+
+        	if(a<i){
+		int w = 3;
+           		i=i+1;
+            		int y = 3;
+            		int c = 4;
+            		i=3-4;
+
+		if(i<4){
+
+			char j="d";
+
+		}
+		char h="d";
+		char h="d";
+
+        	}
+}
+    */
+    //se puede cambiar el  "<" o la variable, solo esta i,e
 
     public static void main(String[] args) {
         Lexico c= new Lexico();
