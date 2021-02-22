@@ -17,7 +17,7 @@ public class Tokens {
     int opLog = 2;
     
     String[][] var;
-    int va = 2;
+    int va = 0;
     
     String [] variables;
 
@@ -27,7 +27,7 @@ public class Tokens {
         this.operadoresArit = new String[opAr][2];
         this.operadoresComparacion = new String[opCom][2];
         this.operadoresLogicos = new String[opLog][2];
-        this.var = new String[10][3];
+        this.var = new String[100][3];
         Iniciar();
         
     }
@@ -121,18 +121,18 @@ public class Tokens {
         this.operadoresLogicos[1][0] = "&&";
         this.operadoresLogicos[1][1] = "Simbolo-Log- y";
         
-        this.var[0][0] = "i";
-        this.var[0][1] = "variable-entero";
-        this.var[0][2] = "12";
-        
-        this.var[1][0] = "e";
-        this.var[1][1] = "variable-entero";
-        this.var[1][2] = "20";
+
 
        
         
     }
 
+    public void setVariables(String nomb, String tipo, String valor){
+        this.var[va][0] = nomb;
+        this.var[va][1] = tipo;
+        this.var[va][2] = valor;
+        this.va++;
+    }
     public void set_va(int a){
         this.va = a;
     }

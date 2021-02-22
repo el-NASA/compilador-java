@@ -46,6 +46,7 @@ public class Lexico {
                             String nombre_aux = "";
 
                             System.out.println(entrada.charAt(a));
+                            control=ingresoVariables(a, entrada, this.etradaDiv.get(this.etradaDiv.size()-1).token, tablaTok);
                             while (entrada.charAt(a)!='='){
                                 nombre_aux = nombre_aux+entrada.charAt(a);
                                 a++;
@@ -168,7 +169,11 @@ public class Lexico {
                     
                 }
             }
-
+            if(control==-1){
+                errorLex++;
+                vista2.getJTextPane().setText(vista2.getJTextPane().getText()+"!!!error def variable");
+                control=0;
+            }
             if(control==0){
                 modelo.addRow(new Object[]{entrada.charAt(a), "Caracter sin sentido- Error"});
                 errorLex++;
@@ -246,5 +251,68 @@ public class Lexico {
         }
         return res;
     }
+
+    public int ingresoVariables(int i, String entrada, String s2, Tokens tablaTok){
+        String descrip="";
+        String nombreVar = "";
+
+        if(entrada.charAt(i)=='='){
+            return -1;
+        }
+        while (entrada.charAt(i)!='='){
+            nombreVar+=entrada.charAt(i);
+            i++;
+        }
+        i++;
+        if(entrada.charAt(i)==';'){
+            return -1;
+        }
+
+        String valor ="";
+            //string entrante
+            String aux="";
+            if(entrada.charAt(i)=='"'){
+                i++;
+                while(entrada.charAt(i)!='"'){
+                    aux=aux+entrada.charAt(i);
+                    i++;
+                }descrip="variable-String";
+
+            }else{
+                if(digitos(entrada.charAt(i))){
+                    descrip="variable-entero";
+
+                    while(digitos(entrada.charAt(i))== true || entrada.charAt(i)=='.' ){
+                        if(entrada.charAt(i)=='.')
+                            descrip="variable-double";
+
+                        aux= aux+entrada.charAt(i);
+                        i++;
+                    }
+
+
+                }
+
+            }
+            valor=aux;
+            //tablaTok.setVariables(nombreVar, descrip, valor);
+            if(s2.equals("int") && descrip.equals("variable-entero")){
+                tablaTok.setVariables(nombreVar, descrip, valor);
+                return 0;
+            }else if (s2.equals("double") && (descrip.equals("variable-double")||descrip.equals("variable-entero"))){
+                tablaTok.setVariables(nombreVar, descrip, valor);
+                return 0;
+            }else if (s2.equals("String") && descrip.equals("variable-String")){
+                tablaTok.setVariables(nombreVar, descrip, valor);
+                return 0;
+            }else if (s2.equals("char") && descrip.equals("variable-String") && valor.length()==1){
+                tablaTok.setVariables(nombreVar, descrip, valor);
+                return 0;
+            }
+
+        return -1;
+        }
+
+
 }   
 

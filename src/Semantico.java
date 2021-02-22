@@ -3,7 +3,9 @@ import java.util.ArrayList;
 public class Semantico {
     ArbolBinario arbolSintactico;
     String[][] var;
+    String[][] varUso;
     int va = 0;
+    int vaUso=0;
     int cantTokens;
     NodoArbol nodoAux;
     ArrayList <Integer> rangos;
@@ -12,7 +14,8 @@ public class Semantico {
     Semantico(ArbolBinario arbol, int caTok, ArrayList<Integer> rangos, Vista vista2){
         this.arbolSintactico = arbol;
         //this.arbolSintactico.inOrderTraverseTree(arbol.root);
-        this.var = new String[10][5];
+        this.var = new String[30][5];
+        this.varUso = new String[30][5];
         this.cantTokens = caTok;
         this.rangos = rangos;
         this.vista = vista2;
@@ -27,6 +30,16 @@ public class Semantico {
         this.var[va][4] = llegada;
         va++;
     }
+
+    public void addVarUso(String nombre, String descr, String valor,String nivel, String llegada){
+        this.varUso[vaUso][0] = nombre;
+        this.varUso[vaUso][1] = descr;
+        this.varUso[vaUso][2] = valor;
+        this.varUso[vaUso][3] = nivel;
+        this.varUso[vaUso][4] = llegada;
+        vaUso++;
+    }
+
     public void inOrderTraverseTreeSem(NodoArbol focusNode){
         if (focusNode!=null){
             inOrderTraverseTreeSem(focusNode.izquierdo);
@@ -48,10 +61,29 @@ public class Semantico {
         }
     }
 
+    public void inOrderTraverseTreeSemUso(NodoArbol focusNode){
+        if (focusNode!=null){
+            inOrderTraverseTreeSemUso(focusNode.izquierdo);
+            System.out.println(focusNode);
+            if(focusNode.nodo.descripcion.equals("variable-entero")||focusNode.nodo.descripcion.equals("variable-double")||
+                    focusNode.nodo.descripcion.equals("variable-String")){
+                NodoArbol nodoAux2 = focusNode;
+                String nombre = nodoAux2.nodo.token;
+                String valor = nodoAux2.nodo.token;
+                String descripcion = focusNode.nodo.descripcion;
+                addVarUso(nombre,descripcion,valor,""+focusNode.key,""+focusNode.llegada);
+            }
+
+
+            inOrderTraverseTreeSemUso(focusNode.derecho);
+
+        }
+    }
+
 
     public void verificacionVariables(){
         System.out.println("retorno de nodos");
-        nodoAux = arbolSintactico.root;
+        //nodoAux = arbolSintactico.root;
 
         inOrderTraverseTreeSem(this.arbolSintactico.root);
         System.out.println("impresion tabla variables");
@@ -85,6 +117,35 @@ public class Semantico {
         }
 
 
+
+    }
+    public void verificacionUsoVariables(){
+        inOrderTraverseTreeSemUso(this.arbolSintactico.root);
+        System.out.println("####impresion ver uso#############");
+        for (int i=0;i<vaUso;i++){
+            int control=0;
+
+            for(int j=0;j<this.va;j++){
+                if (this.varUso[i][0].equals(this.var[j][0])){
+                    int x = getRango(Integer.parseInt(varUso[i][3]));
+                    if((Integer.parseInt(var[j][3])>=x && Integer.parseInt(var[j][3])<=Integer.parseInt(varUso[i][3]))
+                            ||Integer.parseInt(var[j][3])==1){
+                        int entero1=Integer.parseInt(this.varUso[i][4]);
+                        int entero2 = Integer.parseInt(this.var[j][4]);
+                        if(entero1>entero2){
+                            control=1;
+                        }
+                    }
+                }
+            }
+            if(control==1){
+                System.out.println("nombre: "+this.varUso[i][0]+" descr: "+ this.varUso[i][1]+ " valor: "+this.varUso[i][2]+
+                        " nivel:" +this.varUso[i][3]+ " llegada: "+this.varUso[i][4]);
+            }else{
+                System.out.println("ALGO MAL CON nombre: "+this.varUso[i][0]+" descr: "+ this.varUso[i][1]+ " valor: "+this.varUso[i][2]+
+                        " nivel:" +this.varUso[i][3]+ " llegada: "+this.varUso[i][4]);
+            }
+        }
 
     }
 

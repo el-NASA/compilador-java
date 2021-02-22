@@ -168,6 +168,7 @@ public class Sintactico {
         if(a==entrada.size()){
             Semantico anSemantico = new Semantico(arbol, entrada.size(), rangos, vista2);
             anSemantico.verificacionVariables();
+            anSemantico.verificacionUsoVariables();
         }
         return a;
     }
