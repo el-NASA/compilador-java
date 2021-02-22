@@ -60,4 +60,4 @@ public static void main(){
 
 Y su salida es:
 
-![imagen compilador](./img/vista.png)
+![vista](./img/vista.PNG "modelo funcional")
