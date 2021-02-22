@@ -5,9 +5,10 @@ import javax.swing.table.DefaultTableModel;
 public class Sintactico {
 
     ArrayList<Nodo> entrada = new ArrayList<Nodo>();
-
+    ArrayList<Integer> rangos = new ArrayList<Integer>();
     public Sintactico(ArrayList<Nodo> e) {
         this.entrada=e;
+        rangos.add(1);
     }
 
     ArbolBinario arbol = new ArbolBinario();
@@ -15,6 +16,8 @@ public class Sintactico {
     int nivelMax = 0;
     int nivelMin = 1;
     int salto = 1;
+
+
 
     public int analizar_revursivo(JTable vista, int entero1, Vista vista2){
         DefaultTableModel modelo;
@@ -127,6 +130,7 @@ public class Sintactico {
                             salto = nivelMax+3;
                             nivelMin = nivelMax+2;
                             nivel=2;
+                            rangos.add(salto+1);
                         }
                         nivel--;
                         //arbol.addNode(nivel,entrada.get(a));
@@ -162,7 +166,7 @@ public class Sintactico {
             modelo.addRow(new Object[]{"Falta completar", expReg[b]});
         }
         if(a==entrada.size()){
-            Semantico anSemantico = new Semantico(arbol, entrada.size());
+            Semantico anSemantico = new Semantico(arbol, entrada.size(), rangos, vista2);
             anSemantico.verificacionVariables();
         }
         return a;

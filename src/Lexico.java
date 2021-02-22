@@ -218,7 +218,7 @@ public class Lexico {
                 if(entrada.charAt(a+j)!=operador[i][0].charAt(j)){
                     verificacion++;
                 }
-                //si no concuerdan se sale del siclo para evitar errores 
+                //si no concuerdan se sale del ciclo para evitar errores
                 if(verificacion>0){
                     j=operador[i][0].length();
                 }
