@@ -5,6 +5,7 @@
  */
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -167,6 +168,10 @@ public class Vista extends javax.swing.JFrame {
 
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
         this.jTextPane1.setText("");
+        this.jTextArea2.setText("");
+        DefaultTableModel modelo;
+        modelo = (DefaultTableModel) this.getTabla().getModel();
+        modelo.setRowCount(0);
         c.analizar(jTextArea1.getText(),tabla, this);
 
     }//GEN-LAST:event_ingresarActionPerformed

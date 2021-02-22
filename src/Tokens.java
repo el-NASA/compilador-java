@@ -33,7 +33,7 @@ public class Tokens {
     }
 
     public void Iniciar(){
-        
+
         this.palabrasRes[0][0]="if";
         this.palabrasRes[0][1]="Palabra Reservada-Condicional";
         
@@ -43,7 +43,7 @@ public class Tokens {
         this.palabrasRes[2][0]=";";
         this.palabrasRes[2][1]="Palabra Reservada-separador";
 
-        this.palabrasRes[3][0]="print";
+        this.palabrasRes[3][0]="System.out.println";
         this.palabrasRes[3][1]="Palabra Reservada-impresion";
 
         this.palabrasRes[4][0]="main";

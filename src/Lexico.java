@@ -189,7 +189,7 @@ public class Lexico {
         modelo.addRow(new Object[]{"", ""});
 
         if(errorLex==0){
-            vista2.getJTextPane().setText(vista2.getJTextPane().getText()+"\niniciando sintactico\n");
+            vista2.getJTextPane().setText(vista2.getJTextPane().getText()+"\n\n\n#####iniciando sintactico####\n");
             Sintactico sem= new Sintactico(etradaDiv);
             sem.analizar_revursivo(vista,0, vista2);
         }else{

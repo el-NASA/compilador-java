@@ -13,7 +13,7 @@ public class Semantico {
 
     Semantico(ArbolBinario arbol, int caTok, ArrayList<Integer> rangos, Vista vista2){
         this.arbolSintactico = arbol;
-        //this.arbolSintactico.inOrderTraverseTree(arbol.root);
+        this.arbolSintactico.inOrderTraverseTree(arbol.root);
         this.var = new String[30][5];
         this.varUso = new String[30][5];
         this.cantTokens = caTok;
@@ -83,13 +83,11 @@ public class Semantico {
 
     public void verificacionVariables(){
         System.out.println("retorno de nodos");
-        //nodoAux = arbolSintactico.root;
 
         inOrderTraverseTreeSem(this.arbolSintactico.root);
         System.out.println("impresion tabla variables");
         for (int i=0;i<va;i++){
-            //System.out.println("nombre: "+this.var[i][0]+" descr: "+ this.var[i][1]+ " valor: "+this.var[i][2]+
-            //        " nivel:" +this.var[i][3]+ " llegada: "+this.var[i][4]);
+
             vista.getJTextArea2().setText(vista.getJTextArea2().getText()+"\n->"+ "nombre: "+this.var[i][0]+
                     " descr: "+ this.var[i][1]+ " valor: "+this.var[i][2]+" nivel:" +this.var[i][3]+ " llegada: "+
                         this.var[i][4]);
@@ -101,8 +99,8 @@ public class Semantico {
                         int entero1=Integer.parseInt(this.var[i][4]);
                         int entero2 = Integer.parseInt(this.var[j][4]);
                         if (entero2<entero1){
-                            //System.out.println("La variable: "+this.var[i][0]+" con valor: "+this.var[i][2]+" ya fue " +
-                            //        "declarada, se repite: "+this.var[j][0]+"= "+this.var[j][2]);
+                            System.out.println("La variable: "+this.var[i][0]+" con valor: "+this.var[i][2]+" ya fue " +
+                                    "declarada, se repite: "+this.var[j][0]+"= "+this.var[j][2]);
                             vista.getJTextArea2().setText(vista.getJTextArea2().getText()+"\n->"+ "La variable: "+
                                             this.var[i][0]+" con valor: "+this.var[i][2]+" ya fue declarada, " +
                                                 "se repite: "+this.var[j][0]+"= "+this.var[j][2]);
@@ -122,6 +120,7 @@ public class Semantico {
     public void verificacionUsoVariables(){
         inOrderTraverseTreeSemUso(this.arbolSintactico.root);
         System.out.println("####impresion ver uso#############");
+        vista.getJTextArea2().setText(vista.getJTextArea2().getText()+"\n####impresion ver uso#############\n");
         for (int i=0;i<vaUso;i++){
             int control=0;
 
@@ -139,10 +138,15 @@ public class Semantico {
                 }
             }
             if(control==1){
+
                 System.out.println("nombre: "+this.varUso[i][0]+" descr: "+ this.varUso[i][1]+ " valor: "+this.varUso[i][2]+
                         " nivel:" +this.varUso[i][3]+ " llegada: "+this.varUso[i][4]);
+                /*vista.getJTextArea2().setText(vista.getJTextArea2().getText()+"\n->"+ "nombre: "+this.varUso[i][0]+" descr: "+ this.varUso[i][1]+ " valor: "+this.varUso[i][2]+
+                        " nivel:" +this.varUso[i][3]+ " llegada: "+this.varUso[i][4]);*/
             }else{
                 System.out.println("ALGO MAL CON nombre: "+this.varUso[i][0]+" descr: "+ this.varUso[i][1]+ " valor: "+this.varUso[i][2]+
+                        " nivel:" +this.varUso[i][3]+ " llegada: "+this.varUso[i][4]);
+                vista.getJTextArea2().setText(vista.getJTextArea2().getText()+"\n->"+ "ALGO MAL CON nombre: "+this.varUso[i][0]+" descr: "+ this.varUso[i][1]+ " valor: "+this.varUso[i][2]+
                         " nivel:" +this.varUso[i][3]+ " llegada: "+this.varUso[i][4]);
             }
         }
@@ -170,11 +174,6 @@ public class Semantico {
             this.var[i] = this.var[i+1];
         }
         this.va -=1;
-    }
-
-    public boolean compararacionNivel(){
-
-        return true;
     }
 
 
