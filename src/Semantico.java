@@ -146,8 +146,9 @@ public class Semantico {
             }else{
                 System.out.println("ALGO MAL CON nombre: "+this.varUso[i][0]+" descr: "+ this.varUso[i][1]+ " valor: "+this.varUso[i][2]+
                         " nivel:" +this.varUso[i][3]+ " llegada: "+this.varUso[i][4]);
-                vista.getJTextArea2().setText(vista.getJTextArea2().getText()+"\n->"+ "ALGO MAL CON nombre: "+this.varUso[i][0]+" descr: "+ this.varUso[i][1]+ " valor: "+this.varUso[i][2]+
-                        " nivel:" +this.varUso[i][3]+ " llegada: "+this.varUso[i][4]);
+                vista.getJTextArea2().setText(vista.getJTextArea2().getText()+"\n->"+ "LA VARIABLE nombre: "+
+                        this.varUso[i][0]+" descr: "+ this.varUso[i][1]+ " valor: "+this.varUso[i][2]+" FUE DELCARADA DE" +
+                        "FORMA LOCAL PREVIAMENTE, PERO NO ES GLOBAL");
             }
         }
 
