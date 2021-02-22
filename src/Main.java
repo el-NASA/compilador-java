@@ -8,17 +8,24 @@
 public class Main {
     /*
     public static void main(){
+        int w =69;
+        int w=45;
         for(i;i<10;i++){
             print("hola");
+            int j = 3;
+            int g = 9;
         }
+
         if(i<i){
             i=i+1;
             int y = 3;
             int c = 4;
             i=3-4;
         }
-    }*/
-    //se puede cambair el  "<" o la variable, solo esta i,e
+        char j = "d";
+        }
+    */
+    //se puede cambiar el  "<" o la variable, solo esta i,e
 
     public static void main(String[] args) {
         Lexico c= new Lexico();
